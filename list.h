@@ -1,12 +1,8 @@
+#ifndef list_h
+#define list_h
 #pragma once
 #include <string>
 #include <iostream>
-/*
-imp konstru
-Implementera konstruktor (sätt first till nullptr)
-Implementera insert (sätt in ett första värde)
-Implementera print (se till så att första värdet skrivs ut)
-*/
 
 class List
 {
@@ -15,9 +11,20 @@ struct Node;
   
 public:
 List();
-//~List();  
+~List();
+List(List && other); // move constructor -- List l{}
+List & operator = (List && other);
+
+List(List const& other); // Copy constructor -- List l{l2};
+List & operator = (List const& other);
+  
 bool is_empty() const;
 void insert(int value);
+void print_helper(Node * curr) const;
+void print() const;
+int  getSize();  
+int indexAt(int index) const;
+void remove(int index);
 private:
 struct Node
 {
@@ -28,46 +35,13 @@ struct Node
 Node * first{nullptr};
 };
 
-
-  /*
- 
-List(List const& other); //List l{l2};
-List(List && other); //List l{}
+/*
 
 
-  
-List & operator = (List const& other);
-List & operator = (List && other);
 
 
- void remove(int index);
- void print() const;
- int at(int index) const;
- //int size() const;
 
- private:
- struct Node;
- void print_helper(Node * curr) const;
-
-
-};
-
-
-void List::print() const
-{
-print_helper(first);
-//done with recursion
-}
-
-void List::print_helper(Node * curr) const
-{
-if(curr != nullptr)
-{
-std::cout << curr -> value;
-print_helper(curr -> next);
-}
-}
-
+/*
 void List::print() const
 {
 Node * curr{first};
@@ -82,10 +56,6 @@ curr = curr -> next;
 }
 */
 
-/*
-List l2;
-l2.insert(1);
-List l{std::move(l2)};
-CHECK(print(l) == "1");
-*/
 
+
+#endif
